@@ -1,0 +1,27 @@
+{
+  "split_mode": "folders",
+  "train_count": 10240,
+  "val_count": 640,
+  "test_count": 640,
+  "train_distribution": {
+    "MildDemented": 1432,
+    "ModerateDemented": 104,
+    "NonDemented": 5120,
+    "VeryMildDemented": 3584
+  },
+  "val_distribution": {
+    "MildDemented": 90,
+    "ModerateDemented": 6,
+    "NonDemented": 320,
+    "VeryMildDemented": 224
+  },
+  "test_distribution": {
+    "MildDemented": 90,
+    "ModerateDemented": 6,
+    "NonDemented": 320,
+    "VeryMildDemented": 224
+  },
+  "train_dir": "..\\split\\train_double",
+  "val_dir": "..\\split\\val",
+  "test_dir": "..\\split\\test"
+}
