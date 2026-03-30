@@ -316,7 +316,7 @@ class AlzheimerCNN(nn.Module):
         self.features = nn.Sequential(
             nn.Conv2d(3, 32, kernel_size=3, padding=1),
             nn.BatchNorm2d(32),
-            nn.ReLU(inplace=True),
+            nn.ReLU(inplace=True),  # inplace=True 代表直接覆蓋輸入資料以節省記憶體，減少中間暫存空間
             nn.MaxPool2d(kernel_size=2),
             nn.Conv2d(32, 64, kernel_size=3, padding=1),
             nn.BatchNorm2d(64),
@@ -329,13 +329,17 @@ class AlzheimerCNN(nn.Module):
             nn.Conv2d(128, 256, kernel_size=3, padding=1),
             nn.BatchNorm2d(256),
             nn.ReLU(inplace=True),
+            # nn.MaxPool2d(kernel_size=2),
+            # nn.Conv2d(256, 512, kernel_size=3, padding=1),
+            # nn.BatchNorm2d(512),
+            # nn.ReLU(inplace=True),
             # 將任意空間尺寸壓成 1×1，方便接全連接層
             nn.AdaptiveAvgPool2d((1, 1)),
         )
         self.classifier = nn.Sequential(
             nn.Flatten(),
             nn.Dropout(p=0.4),
-            nn.Linear(256, 128),
+            nn.Linear(256, 128),  # 全連接層，將前一層通道數 256 映射成 128 維的特徵向量，準備進入分類層
             nn.ReLU(inplace=True),
             nn.Dropout(p=0.2),
             nn.Linear(128, num_classes),
