@@ -5,9 +5,11 @@
 ```
 python3 .\train_alzheimer.py --split-mode folders --split-root ..\split --output-dir outputs/<run_name>
 ```
+or
 ```
 python3 .\train_alzheimer.py --split-mode folders --train-dir ..\split\train_double --val-dir ..\split\val --test-dir ..\split\test --output-dir outputs/<run_name>
 ```
+or
 ```
 python3 .\train_alzheimer.py --split-mode folders --split-root ..\split --output-dir outputs/<run_PlateauLR> --epochs 30 --lr-scheduler plateau
 ```
@@ -46,8 +48,8 @@ project1/
 
 ## Test Accuracy record
 | Method      | Test1     | Test2     | Test3     | Average   |
-| :---:       | :---:     | :---:     | :---:     | :---:     |
-| baseline    | 0.590625  | 0.55625   | 0.5875    | 0.578125  |
+| :----:       | :---:     | :---:     | :---:     | :---:     |
+| **baseline    | 0.590625  | 0.55625   | 0.5875    | 0.578125  |
 | AvgPool     | 0.5421875 | 0.5640625 | 0.5203125 | 0.5421875 |
 | LeakyReLU   | 0.5671875 | 0.571875  | 0.5828125 | 0.5739583 |
 | augment     | 0.5734375 | 0.5828125 | 0.5703125 | 0.5755208 |
@@ -55,6 +57,6 @@ project1/
 | extraLayer  | (0.6)     | 0.7703125 | 0.75      | (0.76016) |
 | 2extraLayer | 0.7796875 | 0.9609375 | 0.928125  | 0.8895833 |
 | 6L50Drop    | 0.959375  | 0.921875  | 0.934375  | 0.9385417 |
-| stepLR      | 0.9828125 | | | |
+| PlateauLR   | **0.9828125** | 0.9625    | 0.98125   | 0.9755208 |
 
 ※ Given that extraLayer's Test1 was trained for only 10 epochs, we calculated the average of Test2 and Test3 as a more reliable reference for the model's potential.
