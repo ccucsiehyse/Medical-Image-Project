@@ -2,12 +2,12 @@
 
 ## Quick Start
 ### train_alzheimer.py (train Alzheimer CNN)
-```shell
-python .\train_alzheimer.py --split-mode folders --split-root ..\split
+```
+python3 .\train_alzheimer.py --split-mode folders --split-root ..\split --output-dir outputs/<run_name>
 ```
 ### replay model result (replay 'train_alzheimer.py' terminal output)
 ```
-python3 .\replay_model_result.py --run-dir outputs/alzheimer_run
+python3 .\replay_model_result.py --run-dir outputs/<run_name>
 ```
 
 ## Project structure
@@ -33,3 +33,10 @@ project1/
     │       └── (image_name).jpg
     └── split_summary.json
 ```
+
+### Test Accuracy record
+| Method    | Test1     | Test2     | Test3     | Average   |
+| :---:     | :---:     | :---:     | :---:     | :---:     |
+| baseline  | 0.590625  | 0.55625   | 0.5875    | 0.578125  |
+| AvgPool   | 0.5421875 | 0.5640625 | 0.5203125 | 0.5421875 |
+| LeakyReLU | 0.5671875 | 0.571875  | 0.5828125 | 0.5739583 |
