@@ -4,5 +4,5 @@ __pycache__/
 *$py.class
 
 ## Docs you don't want versioned
-README*.md
+# README*.md
 
