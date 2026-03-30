@@ -48,8 +48,8 @@ project1/
 | LeakyReLU   | 0.5671875 | 0.571875  | 0.5828125 | 0.5739583 |
 | augment     | 0.5734375 | 0.5828125 | 0.5703125 | 0.5755208 |
 | 20epoch     | 0.5671875 | 0.55625   | 0.58125   | 0.5682292 |
-| extraLayer  | 0.6       | 0.7703125 | 0.75      | (0.76016) |
+| extraLayer  | (0.6)     | 0.7703125 | 0.75      | (0.76016) |
 | 2extraLayer | 0.7796875 | 0.9609375 | 0.928125  | 0.8895833 |
 | 6L50Drop    | 0.959375  | 0.921875  | 0.934375  | 0.9385417 |
 
-※ Given that Test1 was trained for only 10 epochs, we calculated the average of Test2 and Test3 as a more reliable reference for the model's potential.
+※ Given that extraLayer's Test1 was trained for only 10 epochs, we calculated the average of Test2 and Test3 as a more reliable reference for the model's potential.
