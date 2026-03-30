@@ -329,17 +329,17 @@ class AlzheimerCNN(nn.Module):
             nn.Conv2d(128, 256, kernel_size=3, padding=1),
             nn.BatchNorm2d(256),
             nn.ReLU(inplace=True),
-            # nn.MaxPool2d(kernel_size=2),
-            # nn.Conv2d(256, 512, kernel_size=3, padding=1),
-            # nn.BatchNorm2d(512),
-            # nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2),
+            nn.Conv2d(256, 512, kernel_size=3, padding=1),
+            nn.BatchNorm2d(512),
+            nn.ReLU(inplace=True),
             # 將任意空間尺寸壓成 1×1，方便接全連接層
             nn.AdaptiveAvgPool2d((1, 1)),
         )
         self.classifier = nn.Sequential(
             nn.Flatten(),
             nn.Dropout(p=0.4),
-            nn.Linear(256, 128),  # 全連接層，將前一層通道數 256 映射成 128 維的特徵向量，準備進入分類層
+            nn.Linear(512, 128),  # 全連接層，將前一層通道數 256 映射成 128 維的特徵向量，準備進入分類層
             nn.ReLU(inplace=True),
             nn.Dropout(p=0.2),
             nn.Linear(128, num_classes),
