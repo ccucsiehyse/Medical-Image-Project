@@ -342,10 +342,10 @@ class AlzheimerCNN(nn.Module):
         )
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Dropout(p=0.4),
+            nn.Dropout(p=0.5),
             nn.Linear(1024, 128),  # 全連接層，將前一層通道數 1024 映射成 128 維的特徵向量，準備進入分類層
             nn.ReLU(inplace=True),
-            nn.Dropout(p=0.2),
+            nn.Dropout(p=0.5),
             nn.Linear(128, num_classes),
         )
 
