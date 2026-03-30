@@ -4,8 +4,12 @@
 ### train_alzheimer.py (train Alzheimer CNN)
 ```
 python3 .\train_alzheimer.py --split-mode folders --split-root ..\split --output-dir outputs/<run_name>
-# or
+```
+```
 python3 .\train_alzheimer.py --split-mode folders --train-dir ..\split\train_double --val-dir ..\split\val --test-dir ..\split\test --output-dir outputs/<run_name>
+```
+```
+python3 .\train_alzheimer.py --split-mode folders --split-root ..\split --output-dir outputs/<run_PlateauLR> --epochs 30 --lr-scheduler plateau
 ```
 ### replay_model_result.py (replay 'train_alzheimer.py' terminal output)
 ```
@@ -51,5 +55,6 @@ project1/
 | extraLayer  | 0.6       | 0.7703125 | 0.75      | (0.76016) |
 | 2extraLayer | 0.7796875 | 0.9609375 | 0.928125  | 0.8895833 |
 | 6L50Drop    | 0.959375  | 0.921875  | 0.934375  | 0.9385417 |
+| stepLR      | 0.9828125 | | | |
 
 ※ Given that Test1 was trained for only 10 epochs, we calculated the average of Test2 and Test3 as a more reliable reference for the model's potential.

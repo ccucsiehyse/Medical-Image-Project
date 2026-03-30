@@ -82,6 +82,43 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--epochs", type=int, default=10)
     parser.add_argument("--lr", type=float, default=1e-4)
+    parser.add_argument(
+        "--lr-scheduler",
+        type=str,
+        default="none",
+        choices=["none", "step", "plateau"],
+        help="Learning rate scheduler type.",
+    )
+    parser.add_argument(
+        "--lr-step-size",
+        type=int,
+        default=7,
+        help="(step) Decay LR every N epochs.",
+    )
+    parser.add_argument(
+        "--lr-gamma",
+        type=float,
+        default=0.5,
+        help="(step) Multiplicative LR decay factor.",
+    )
+    parser.add_argument(
+        "--lr-patience",
+        type=int,
+        default=3,
+        help="(plateau) Number of bad epochs before LR decay.",
+    )
+    parser.add_argument(
+        "--lr-factor",
+        type=float,
+        default=0.5,
+        help="(plateau) Multiplicative LR decay factor.",
+    )
+    parser.add_argument(
+        "--lr-min",
+        type=float,
+        default=1e-6,
+        help="(plateau) Lower bound on learning rate.",
+    )
     parser.add_argument("--weight-decay", type=float, default=1e-4)
     parser.add_argument("--val-ratio", type=float, default=0.1)
     parser.add_argument("--test-ratio", type=float, default=0.1)
@@ -537,6 +574,21 @@ def main() -> None:
     class_weights = compute_class_weights(train_samples, num_classes=len(class_names)).to(device)
     criterion = nn.CrossEntropyLoss(weight=class_weights)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+    scheduler: torch.optim.lr_scheduler.LRScheduler | torch.optim.lr_scheduler.ReduceLROnPlateau | None = None
+    if args.lr_scheduler == "step":
+        scheduler = torch.optim.lr_scheduler.StepLR(
+            optimizer,
+            step_size=args.lr_step_size,
+            gamma=args.lr_gamma,
+        )
+    elif args.lr_scheduler == "plateau":
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer,
+            mode="min",
+            factor=args.lr_factor,
+            patience=args.lr_patience,
+            min_lr=args.lr_min,
+        )
 
     history: list[dict[str, float]] = []
     best_val_accuracy = -1.0
@@ -566,13 +618,21 @@ def main() -> None:
             "train_accuracy": train_metrics["accuracy"],
             "val_loss": val_metrics["loss"],
             "val_accuracy": val_metrics["accuracy"],
+            "lr": optimizer.param_groups[0]["lr"],
         }
         history.append(epoch_record)
+
+        if scheduler is not None:
+            if isinstance(scheduler, torch.optim.lr_scheduler.ReduceLROnPlateau):
+                scheduler.step(val_metrics["loss"])
+            else:
+                scheduler.step()
 
         print(
             f"Epoch {epoch}/{args.epochs} | "
             f"train_loss={train_metrics['loss']:.4f} train_acc={train_metrics['accuracy']:.4f} | "
-            f"val_loss={val_metrics['loss']:.4f} val_acc={val_metrics['accuracy']:.4f}"
+            f"val_loss={val_metrics['loss']:.4f} val_acc={val_metrics['accuracy']:.4f} | "
+            f"lr={optimizer.param_groups[0]['lr']:.6g}"
         )
 
         # 驗證準確率創新高時儲存 checkpoint（含權重與類別對照，方便推論還原標籤）
