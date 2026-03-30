@@ -1,0 +1,8 @@
+## Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+## Docs you don't want versioned
+README*.md
+
