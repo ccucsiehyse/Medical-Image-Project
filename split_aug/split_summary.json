@@ -1,0 +1,30 @@
+{
+  "source_dir": "/home/user/project/Alzheimer_s Dataset/train",
+  "output_dir": "/home/user/project/Alzheimer_s Dataset/split",
+  "val_ratio": 0.1,
+  "test_ratio": 0.1,
+  "seed": 42,
+  "mode": "copy",
+  "classes": {
+    "MildDemented": {
+      "val": 90,
+      "test": 90,
+      "train": 716
+    },
+    "ModerateDemented": {
+      "val": 6,
+      "test": 6,
+      "train": 52
+    },
+    "NonDemented": {
+      "val": 320,
+      "test": 320,
+      "train": 2560
+    },
+    "VeryMildDemented": {
+      "val": 224,
+      "test": 224,
+      "train": 1792
+    }
+  }
+}

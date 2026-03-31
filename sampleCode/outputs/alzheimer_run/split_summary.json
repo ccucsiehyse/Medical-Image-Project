@@ -1,0 +1,24 @@
+{
+  "data_dir": "Alzheimer_s Dataset/train",
+  "train_count": 5120,
+  "val_count": 640,
+  "test_count": 640,
+  "train_distribution": {
+    "MildDemented": 716,
+    "ModerateDemented": 52,
+    "NonDemented": 2560,
+    "VeryMildDemented": 1792
+  },
+  "val_distribution": {
+    "MildDemented": 90,
+    "ModerateDemented": 6,
+    "NonDemented": 320,
+    "VeryMildDemented": 224
+  },
+  "test_distribution": {
+    "MildDemented": 90,
+    "ModerateDemented": 6,
+    "NonDemented": 320,
+    "VeryMildDemented": 224
+  }
+}
