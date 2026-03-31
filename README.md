@@ -17,6 +17,14 @@ python3 .\train_alzheimer.py --split-mode folders --split-root ..\split --output
 ```
 python3 .\replay_model_result.py --run-dir outputs/<run_name>
 ```
+### test.py (test the model)
+```
+python3 .\test.py --checkpoint outputs/<run_name>/best_model.pt --test-dir ../split/test --show-cm
+```
+or
+```
+python3 .\test.py --checkpoint outputs/run_PlateauLR/best_model.pt --test-dir ../split/test --show-cm --cm-output outputs/run_PlateauLR/confusion_matrix.png
+```
 ### [ tool ] augmentation_train.py (augment train-set by "horizontal flip")
 ```
 python3 .\augmentation_train.py
