@@ -7,7 +7,43 @@
 - 使用自訂小型 CNN（AlzheimerCNN）與加權交叉熵，處理類別不平衡。
 - 依驗證集準確率儲存最佳權重，最後在測試集上評估並寫出 metrics.json、split_summary.json。
 
-執行方式：以命令列參數設定路徑與超參數（見 parse_args）。
+執行參數說明：
+
+資料與模式選項：
+--split-mode        模式選擇：'stratified' (自動切分) 或 'folders' (指定資料夾)。 (預設: stratified)
+--data-dir          (stratified 模式) 含有類別子資料夾的原始數據根目錄。 (預設: Alzheimer_s Dataset/train)
+--split-root        (folders 模式) 自動尋找該目錄下的 train, val, test 子目錄。
+--train-dir         (folders 模式) 手動指定訓練集路徑，須與 --val-dir, --test-dir 同時使用。
+--val-dir           (folders 模式) 手動指定驗證集路徑。
+--test-dir          (folders 模式) 手動指定測試集路徑。
+--output-dir        輸出目錄，用於儲存模型權重 (.pt) 與數據報告 (.json)。 (預設: outputs/alzheimer_run)
+
+訓練超參數：
+--image-size        影像縮放尺寸 (正方形)。 (預設: 224)
+--batch-size        每批次訓練的樣本數。 (預設: 32)
+--epochs            總訓練輪次。 (預設: 10)
+--lr                起始學習率。 (預設: 1e-4)
+--weight-decay      L2 正規化權重衰減。 (預設: 1e-4)
+--seed              隨機種子，確保實驗可重現。 (預設: 42)
+--device            運算設備：'auto', 'cpu', 'cuda'。 (預設: auto)
+
+切分比例 (僅限 stratified 模式)：
+--val-ratio         驗證集比例 (0.0 ~ 1.0)。 (預設: 0.1)
+--test-ratio        測試集比例 (0.0 ~ 1.0)。 (預設: 0.1)
+
+學習率排程 (LR Scheduler)：
+--lr-scheduler      類型：'none', 'step', 'plateau'。 (預設: none)
+--lr-step-size      (step) 每隔多少 epoch 衰減學習率。 (預設: 7)
+--lr-gamma          (step) 學習率衰減倍率。 (預設: 0.5)
+--lr-patience       (plateau) 容忍驗證集損耗不降的輪次。 (預設: 3)
+--lr-factor         (plateau) 學習率縮減倍率。 (預設: 0.5)
+--lr-min            (plateau) 學習率下限。 (預設: 1e-6)
+
+測試與效能：
+--num-workers       DataLoader 讀取資料的線程數。 (預設: 0)
+--max-train-batches 限制每輪訓練的批次數 (用於快速測試程式)。
+--max-eval-batches  限制評估時的批次數。
+
 """
 from __future__ import annotations
 

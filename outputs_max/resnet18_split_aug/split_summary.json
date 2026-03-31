@@ -1,0 +1,6 @@
+{
+  "split_mode": "folders",
+  "train_count": 5588,
+  "val_count": 640,
+  "test_count": 640
+}
